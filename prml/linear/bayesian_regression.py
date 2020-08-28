@@ -22,6 +22,7 @@ class BayesianRegression(Regression):
 
     # 获得先验:
     # -> 描述数据的返回类型
+    ## 如果没有定义 w_mean, w_precision, 就返回全0和1的先验.
     def _get_prior(self, ndim:int) -> tuple:
         if self._is_prior_defined():
             return self.w_mean, self.w_precision
@@ -40,15 +41,26 @@ class BayesianRegression(Regression):
             training data dependent variable
         """
 
+        # 获得先验:
+        # 先验受到上一层迭代的 self.w_mean, self.w_precision 影响.
         mean_prev, precision_prev = self._get_prior(np.size(X, 1))
 
+        ### ---
+        # 主要就是下面 由 先验(上一层的w_mean, w_precision), X 以及模型基本参数, 对w_mean, w_precision更新.
+        # 上面那句话是关键.
+
+        # (3.51):
         w_precision = precision_prev + self.beta * X.T @ X
+        # (3.50) 移项:
         w_mean = np.linalg.solve(
             w_precision,
             precision_prev @ mean_prev + self.beta * X.T @ t
         )
         self.w_mean = w_mean
         self.w_precision = w_precision
+        # w_mean 就是一轮迭代下来的 超参数结果.
+        ### ---
+
         self.w_cov = np.linalg.inv(self.w_precision)
 
     def predict(self, X:np.ndarray, return_std:bool=False, sample_size:int=None):
