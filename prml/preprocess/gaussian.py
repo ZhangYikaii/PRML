@@ -19,6 +19,9 @@ class GaussianFeature(object):
         var : float
             variance of the gaussian function
         """
+
+        # 限制 mean array 维度为2.
+        # ndim 是由几个维度, 就是.shape有几个数.
         if mean.ndim == 1:
             mean = mean[:, None]
         else:
@@ -52,4 +55,5 @@ class GaussianFeature(object):
         basis = [np.ones(len(x))]
         for m in self.mean:
             basis.append(self._gauss(x, m))
+
         return np.asarray(basis).transpose()

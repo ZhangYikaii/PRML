@@ -25,7 +25,9 @@ class RidgeRegression(Regression):
         """
 
         eye = np.eye(np.size(X, 1))
-        self.w = np.linalg.solve(self.alpha * eye + X.T @ X, X.T @ t)
+        # self.w = np.linalg.solve(self.alpha * eye + X.T @ X, X.T @ t)
+        # 式(3.28) 上面一个也可以, 就是没有"移项"的式子.
+        self.w = np.linalg.inv(self.alpha * eye + X.T @ X) @ np.transpose(X) @ t
 
     def predict(self, X:np.ndarray):
         """

@@ -20,6 +20,8 @@ class BayesianRegression(Regression):
     def _is_prior_defined(self) -> bool:
         return self.w_mean is not None and self.w_precision is not None
 
+    # 获得先验:
+    # -> 描述数据的返回类型
     def _get_prior(self, ndim:int) -> tuple:
         if self._is_prior_defined():
             return self.w_mean, self.w_precision

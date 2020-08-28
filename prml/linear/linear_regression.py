@@ -20,7 +20,14 @@ class LinearRegression(Regression):
         t : (N,) np.ndarray
             training dependent variable
         """
+
+        # 3.17 MLE的 w = 伪逆(\Phi) @ t
         self.w = np.linalg.pinv(X) @ t
+        # print("np.linalg.pinv(X), t, self.w shape.")
+        # print(np.linalg.pinv(X).shape)
+        # print(t.shape)
+        # print(self.w.shape)
+        # print("np.linalg.pinv(X), t, self.w shape OK.")
         self.var = np.mean(np.square(X @ self.w - t))
 
     def predict(self, X:np.ndarray, return_std:bool=False):
@@ -41,6 +48,7 @@ class LinearRegression(Regression):
         y_std : (N,) np.ndarray
             standard deviation of each predition
         """
+
         y = X @ self.w
         if return_std:
             y_std = np.sqrt(self.var) + np.zeros_like(y)

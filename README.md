@@ -1,4 +1,20 @@
 # PRML
+:rice: 我要理解并注释这个项目.
+
+更新路线图:
+
++ 第三章 [ch03_Linear_Models_for_Regression.ipynb](notebook/ch03_Linear_Models_for_Regression.ipynb)
+
+  测试文件: [Kaiaicy-test.py](notebook/Kaiaicy-test.py)
+
+  + 数据预处理/: `preprocess `子文件夹:
+
+    + [gaussian.py](prml/preprocess/gaussian.py), [polynomial.py](prml/preprocess/gaussian.py)
+
+    
+
+---
+
 Python codes implementing algorithms described in Bishop's book "Pattern Recognition and Machine Learning"
 
 ## Required Packages
