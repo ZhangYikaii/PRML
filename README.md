@@ -5,7 +5,7 @@
 
 + 第三章 [ch03_Linear_Models_for_Regression.ipynb](notebooks/ch03_Linear_Models_for_Regression.ipynb)
 
-  测试文件: [Kaiaicy-test.py](notebooks/Kaiaicy-test.py)
+  测试文件: [Kaiaicy-test-ch03.py](notebooks/Kaiaicy-test-ch03.py)
 
   + 数据预处理/基模型回归中的基模型: `preprocess` 子文件夹:
     + [gaussian.py](prml/preprocess/gaussian.py), [polynomial.py](prml/preprocess/gaussian.py)
@@ -17,6 +17,20 @@
     + [bayesian_regression.py](prml/linear/bayesian_regression.py)
   + 3.5 The Evidence Approximation:
     + [emprical_bayes_regression.py](prml/linear/emprical_bayes_regression.py)
+  
+  
+  
++ 第四章 [ch04_Linear_Models_for_Classfication.ipynb](notebooks/ch04_Linear_Models_for_Classfication.ipynb)
+
+  测试文件: [Kaiaicy-test-ch04.py](notebooks/Kaiaicy-test-ch04.py)
+
+  + 4.1.3 Least squares for classification:
+
+    [least_squares_classifier.py](prml/linear/least_squares_classifier.py)
+
+    + 加入离群点, 与logistic回归模型比较:
+
+      [logistic_regression.py](prml/linear/logistic_regression.py)
 
 &nbsp;
 

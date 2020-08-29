@@ -29,6 +29,7 @@ class LeastSquaresClassifier(Classifier):
         """
         if t.ndim == 1:
             t = LabelTransformer().encode(t)
+        # 式(4.17):
         self.W = np.linalg.pinv(X) @ t
 
     def classify(self, X:np.ndarray):

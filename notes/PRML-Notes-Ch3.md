@@ -71,6 +71,8 @@ $$
 $$
 偏置$w_0$直接加到参数输出上, 补偿了训练集上目标值的平均值, 与基函数加权求和, 之间的差.
 
+
+
 ##### 3 $\beta_{ML}^{-1}$ 求解
 
 $$
@@ -105,6 +107,7 @@ $$
 $$
 \boldsymbol{w}^{(\tau+1)}=\boldsymbol{w}^{(\tau)}+\eta\left(t_{n}-\boldsymbol{w}^{(\tau) T} \boldsymbol{\phi}_{n}\right) \boldsymbol{\phi}_{n}
 $$
+
 
 
 #### 3.1.4 正则化最小平方
@@ -145,7 +148,13 @@ $$
 
 #### 3.1 回顾
 
+从线性基函数模型出发:
 
++ 3.1.1: 该模型平方误差下最大似然的求解($w$ 与附加高斯噪声的 $\beta^{-1}$).
++ 3.1.2: 最小平方误差的几何描述(但是没看懂).
++ 3.1.3: 非常简要的梯度下降.
++ 3.1.4: 带有正则化项的线性基函数模型(介绍了一般形式的正则项及其作用).
++ 3.1.5: $\boldsymbol{x}$ 是多个维度的, 在后面代码实现中都是这样.
 
 
 
@@ -158,6 +167,8 @@ $$
 
 所以从频率角度研究模型复杂度: 偏置 - 方差分解.
 
+
+
 #### 1 最优的预测
 
 由条件概率分布的期望给出:
@@ -169,6 +180,8 @@ $$
 \mathbb{E} [ \mathcal{L}] = \int \{ y( \boldsymbol{x}) - h(\boldsymbol{x})\}^2p ( \boldsymbol{x})d \boldsymbol{x} + \int \int \{h(\boldsymbol{x}) - t \}^2 p(\boldsymbol{x}, t)d \boldsymbol{x} dt
 $$
 找到一个$y(\boldsymbol{x})$使第一项最小, 而与$y(\boldsymbol{x})$无关的第二项是由数据本身的噪声造成的, 表示期望损失能够到达的最小值.
+
+
 
 #### 2 分解关于 $y(\boldsymbol{x})$ 的第一项
 
@@ -184,6 +197,8 @@ $$
 $$
 \begin{array}{c}\text { 偏置 }^{2}=\int\left\{\mathbb{E}_{\mathcal{D}}[y(\boldsymbol{x} ; \mathcal{D})]-h(\boldsymbol{x})\right\}^{2} p(\boldsymbol{x}) \mathrm{d} \boldsymbol{x} \\\text { 方差 }=\int \mathbb{E}_{\mathcal{D}}\left[\left\{y(\boldsymbol{x} ; \mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\boldsymbol{x} ; \mathcal{D})]\right\}^{2}\right] p(\boldsymbol{x}) \mathrm{d} \boldsymbol{x} \\\text { 噪声 }=\iint\{h(\boldsymbol{x})-t\}^{2} p(\boldsymbol{x}, t) \mathrm{d} \boldsymbol{x} \mathrm{d} t\end{array}
 $$
+
+
 #### 3 trade-off
 
 ![image-20200827092526379](assets/image-20200827092526379.png)
@@ -207,9 +222,21 @@ $$
 
 
 
+#### 3.2 回顾
+
+出发点: 从频率角度研究模型复杂度, $\lambda$ 对模型的影响量化分析.
+
++ 1: 平方损失函数分解为两部分, 考虑与模型有关的第一项.
++ 2: 期望损失 $\mathbb{E} [ \mathcal{L}]$ 被分解成了 偏置$^2$ + 方差 + 噪声.
++ 3: 多个模型(不同$\lambda$)对数据集拟合, 输出(所有函数的比较) 和 (所有的函数平均与真实采样函数的比较), 偏置方差都可以定量计算, 考虑偏置方差的trade-off.
+
+
+
 ### 3.3 贝叶斯线性回归
 
 MLE会产生过于复杂的模型并过拟合, 而且需要对模型基函数的数量和形式进行选择.
+
+
 
 #### 3.3.1 参数分布
 
@@ -364,6 +391,14 @@ $$
 \sum_n^N k(\boldsymbol{x}, \boldsymbol{x_n}) = 1
 $$
 
+#### 3.3 回顾
+
+比较有趣的一节:
+
++ 3.3.1: 共轭先验导出后验概率分布的形式, 为简化可以采用零均值先验. 之后讲解了贝叶斯线性回归的迭代学习过程, 上一轮得到的后验作为下一轮的先验.
++ 3.3.2: $w_0 + w_1 x$ 换成了 $sin(2 \pi x)$, 具体的方差等也有写变化, 但是没看懂.
++ 3.3.3: 等价核以及相关性质.
+
 
 
 ### 3.4 贝叶斯模型比较
@@ -401,6 +436,14 @@ $$
 
 
 
+#### 3.4 回顾
+
+这一节不是看的很懂.
+
++ 不太明白那个 $p(\mathcal{D})$ 想表达什么. 用近似均匀分布的后验和先验近似计算了.
+
+
+
 ### 3.5 证据近似
 
 **经验贝叶斯** (第二类最大似然): 对 $w$ 或者超参数的积分可能没有解析解, 这里讨论一种近似方法: 首先对参数$w$求积分, 得到边缘似然函数, 然后通过最大化边缘似然函数, 确定超参数的值.
@@ -415,6 +458,8 @@ $$
 $$
 p(t \mid \boldsymbol{t}) \simeq p(t \mid \mathbf{t}, \widehat{\alpha}, \widehat{\beta})=\int p(t \mid \boldsymbol{w}, \widehat{\beta}) p(\boldsymbol{w} \mid \mathbf{t}, \widehat{\alpha}, \widehat{\beta}) \mathrm{d} \boldsymbol{w}
 $$
+
+
 
 #### 3.5.1 计算证据函数
 
@@ -462,7 +507,7 @@ $$
 \ln p(\mathbf{t} \mid \alpha, \beta)=\frac{M}{2} \ln \alpha+\frac{N}{2} \ln \beta-E\left(\boldsymbol{m}_{N}\right)-\frac{1}{2} \ln |\boldsymbol{A}|-\frac{N}{2} \ln (2 \pi)
 $$
 
-#### 代码实现
+#### **代码实现**
 
 ```python
 def _log_prior(self, w):
@@ -508,3 +553,12 @@ def log_evidence(self, X:np.ndarray, t:np.ndarray):
   + 注意这里 $\alpha$ 是一个隐式解:
 
     $\gamma$ 与 $\alpha$ 有关, 最大后验概率的 $\boldsymbol{m}_N$ 也与 $\alpha$ 有关, 所以 $\alpha$ 的估计是迭代的?
+
+
+
+#### 3.5 回顾
+
+出发点: 经验贝叶斯 (第二类最大似然): 对 $w$ 或者超参数的积分可能没有解析解, 讨论一种近似方法: 首先对参数$w$求积分, 得到边缘似然函数, 然后通过最大化边缘似然函数(证据函数), 确定超参数的值.
+
++ 3.5.1: 用高斯分布归一化系数来计算证据函数.
++ 3.5.2: 最大化上一节计算的证据函数(似然), 隐式解迭代计算直到收敛.
