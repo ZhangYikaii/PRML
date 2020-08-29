@@ -28,8 +28,13 @@ class FishersLinearDiscriminant(Classifier):
         X1 = X[t == 1]
         m0 = np.mean(X0, axis=0)
         m1 = np.mean(X1, axis=0)
+
+        # (4.28) S_W 类内协方差矩阵:
         cov_inclass = np.cov(X0, rowvar=False) + np.cov(X1, rowvar=False)
+        # (4.30):
         self.w = np.linalg.solve(cov_inclass, m1 - m0)
+
+        # ???: 接下来都没看懂.
         self.w /= np.linalg.norm(self.w).clip(min=1e-10)
 
         g0 = Gaussian()

@@ -32,6 +32,12 @@
 
       [logistic_regression.py](prml/linear/logistic_regression.py)
 
+  + 4.1.4 Fisher's linear discriminant:
+
+    [fishers_linear_discriminant.py](prml/linear/fishers_linear_discriminant.py)
+
+    [gaussian.py](prml/rv/gaussian.py)
+
 &nbsp;
 
 ---

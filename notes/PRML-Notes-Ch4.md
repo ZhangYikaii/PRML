@@ -1,6 +1,6 @@
 [TOC]
 
-## 4 分类的线性模型
+## 4 Linear Models for Classification
 
 分类目标: 将输入变量$x$分到$K$个离散的类别 $\mathcal{C}_k$ 中的某一类.
 
@@ -117,4 +117,60 @@ $$
 w \propto S_{W}^{-1}\left(m_{2}-m_{1}\right)
 $$
 
-到这里(式(4.30)), 求解和西瓜书几乎一样呀, 上式立即给出了 $w$ 最优的投影方向.
+上式即 Fisher 线性判别函数. 到这里(式(4.30)), 求解和西瓜书几乎一样呀, 上式立即给出了 $w$ 最优的投影方向.
+
+
+
+#### 4.1.5 与最小平方的关系
+
+二分类问题, Fisher准则是最小平方的一个特例. 要使用一种稍微不同的表达方法:
+
++ $t_n = \frac{N}{N_1}$, 如果该样本属于 $\mathcal{C}_1$. $N_1$ 是第1类中样本数量.
++ $t_n = - \frac{N}{N_2}$, 如果该样本属于 $\mathcal{C}_2$.
+
+$$
+E=\frac{1}{2} \sum_{n=1}^{N}\left(\boldsymbol{w}^{T} \boldsymbol{x}_{n}+w_{0}-t_{n}\right)^{2}
+$$
+令$E$关于$w_0$和$\boldsymbol{w}$的导数等于零:
+$$
+\begin{aligned}
+\sum_{n=1}^{N}\left(\boldsymbol{w}^{T} \boldsymbol{x}_{n}+w_{0}-t_{n}\right) &=0 \\
+\sum_{n=1}^{N}\left(\boldsymbol{w}^{T} \boldsymbol{x}_{n}+w_{0}-t_{n}\right) \boldsymbol{x}_{n} &=0
+\end{aligned}
+$$
+1. 综合 $t_n$ 的表达, 得到偏置的表达式, $\boldsymbol{m}$ 为均值.
+   $$
+   w_{0}=-\boldsymbol{w}^{T} \boldsymbol{m}
+   $$
+
+2. 同理, 由上述第二个式子推出:
+   $$
+   \left(S_{W}+\frac{N_{1} N_{2}}{N} S_{B}\right) w=N\left(m_{1}-m_{2}\right)
+   $$
+   上式移项, 将 $\frac{N_{1} N_{2}}{N} S_{B} w$ 移到等式对面, 发现 $S_B w$ 总是在 $(m_2 - m_1)$ 的方向上:
+   $$
+   \boldsymbol{w} \propto \boldsymbol{S}_{W}^{-1}\left(\boldsymbol{m}_{2}-\boldsymbol{m}_{1}\right)
+   $$
+
+
+
+#### 4.1.6 多分类的Fisher判别函数
+
+推广, 类内协方差矩阵:
+$$
+\begin{array}{c}
+S_{W}=\sum_{k=1}^{K} S_{k} \\
+S_{k}=\sum_{n \in \mathcal{C}_{k}}\left(\boldsymbol{x}_{n}-\boldsymbol{m}_{k}\right)\left(\boldsymbol{x}-\boldsymbol{m}_{k}\right)^{T} \\
+\boldsymbol{m}_{k}=\frac{1}{N_{k}} \sum_{n \in \mathcal{C}_{k}} \boldsymbol{x}_{n}
+\end{array}
+$$
+
+$$
+S_{B}=\sum_{k=1}^{K} N_{k}\left(m_{k}-m\right)\left(m_{k}-m\right)^{T}
+$$
+
+最大化:
+$$
+J(\boldsymbol{W})=\operatorname{Tr}\left\{\left(\boldsymbol{W}^{T} \boldsymbol{S}_{W} \boldsymbol{W}\right)^{-1}\left(\boldsymbol{W}^{T} \boldsymbol{S}_{B} \boldsymbol{W}\right)\right\}
+$$
+注意, $S_B$ 是$K$个类, $K$个矩阵的和, 每个矩阵都是外积, 所以秩最大为1, 但是因为(4.44) 均值 $\boldsymbol{m}$ 的定义: $m=\frac{1}{N} \sum_{n=1}^{N} x_{n}=\frac{1}{N} \sum_{k=1}^{K} N_{k} m_{k}$, 所以最多只有 $K - 1$ 个相互独立的, 因此 $S_B$ 的秩最大是 $K - 1$.
