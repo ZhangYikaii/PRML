@@ -7,7 +7,7 @@
 
   测试文件: [Kaiaicy-test.py](notebooks/Kaiaicy-test.py)
 
-  + 数据预处理/基模型回归中的基模型: `preprocess `子文件夹:
+  + 数据预处理/基模型回归中的基模型: `preprocess` 子文件夹:
     + [gaussian.py](prml/preprocess/gaussian.py), [polynomial.py](prml/preprocess/gaussian.py)
   + 3.1.1 Maximum likelihood and least squares:
     + [linear_regression.py](prml/linear/linear_regression.py)
@@ -15,6 +15,8 @@
     + [ridge_regression.py](prml/linear/ridge_regression.py)
   + 3.3 Bayesian Linear Regression:
     + [bayesian_regression.py](prml/linear/bayesian_regression.py)
+  + 3.5 The Evidence Approximation:
+    + [emprical_bayes_regression.py](prml/linear/emprical_bayes_regression.py)
 
 &nbsp;
 

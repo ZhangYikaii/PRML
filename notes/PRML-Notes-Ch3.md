@@ -461,3 +461,50 @@ $$
 $$
 \ln p(\mathbf{t} \mid \alpha, \beta)=\frac{M}{2} \ln \alpha+\frac{N}{2} \ln \beta-E\left(\boldsymbol{m}_{N}\right)-\frac{1}{2} \ln |\boldsymbol{A}|-\frac{N}{2} \ln (2 \pi)
 $$
+
+#### 代码实现
+
+```python
+def _log_prior(self, w):
+    return -0.5 * self.alpha * np.sum(w ** 2)
+def _log_likelihood(self, X, t, w):
+    return -0.5 * self.beta * np.square(t - X @ w).sum()
+
+def _log_posterior(self, X, t, w):
+    # 式(3.82)
+    return self._log_likelihood(X, t, w) + self._log_prior(w)
+def log_evidence(self, X:np.ndarray, t:np.ndarray):
+    # 式(3.86)计算证据函数的对数.
+    N = len(t)
+    D = np.size(X, 1)
+    return 0.5 * (
+        D * np.log(self.alpha) + N * np.log(self.beta)
+        - np.linalg.slogdet(self.w_precision)[1] - D * np.log(2 * np.pi)
+    ) + self._log_posterior(X, t, self.w_mean)
+```
+
+
+
+#### 3.5.2 最大化证据函数
+
++ 证据函数的对数 对 $\alpha$ 求导:
+
+  上一节 证据函数的对数中出现了$\ln |\boldsymbol{A}|$, 对 $|\boldsymbol{A}|$ 展开之后才比较好求导, 所以要用到其特征值:
+
+  + 由(3.81), 定义 $\boldsymbol{A}$ 的特征值为 $\alpha + \lambda_i$:
+    $$
+    \boldsymbol{A}=\alpha \boldsymbol{I}+\beta \boldsymbol{\Phi}^{T} \boldsymbol{\Phi}
+    $$
+
+  + 证据函数的对数求导(关于 $\alpha$), 整理:
+    $$
+    \begin{array}{l}
+    0=\frac{M}{2 \alpha}-\frac{1}{2} m_{N}^{T} m_{N}-\frac{1}{2} \sum_{i} \frac{1}{\lambda_{i}+\alpha} \\
+    \text{Let: } \gamma = \alpha m_{N}^{T} m_{N}=M-\alpha \sum_{i} \frac{1}{\lambda_{i}+\alpha} \\
+    \alpha = \frac{\gamma}{\boldsymbol{m}_N^T \boldsymbol{m}_N}
+    \end{array}
+    $$
+
+  + 注意这里 $\alpha$ 是一个隐式解:
+
+    $\gamma$ 与 $\alpha$ 有关, 最大后验概率的 $\boldsymbol{m}_N$ 也与 $\alpha$ 有关, 所以 $\alpha$ 的估计是迭代的?

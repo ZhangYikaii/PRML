@@ -13,7 +13,7 @@ class EmpiricalBayesRegression(BayesianRegression):
     w ~ N(w|0, alpha^(-1)I)
     y = X @ w
     t ~ N(t|X @ w, beta^(-1))
-    evidence function p(t|X,alpha,beta) = S p(t|w;X,beta)p(w|0;alpha) dw
+    evidence function p(t|X,alpha,beta) = S p(t|w;X,beta)p(w|0;alpha) dw (书上式(3.77))
     """
 
     def __init__(self, alpha:float=1., beta:float=1.):
@@ -37,17 +37,25 @@ class EmpiricalBayesRegression(BayesianRegression):
         eigenvalues = np.linalg.eigvalsh(M)
         eye = np.eye(np.size(X, 1))
         N = len(t)
+
+        # 估计 \alpha 是迭代的, 直到收敛.
         for _ in range(max_iter):
             params = [self.alpha, self.beta]
 
+            # 之前的 式(3.50)(3.51):
             w_precision = self.alpha * eye + self.beta * X.T @ X
             w_mean = self.beta * np.linalg.solve(w_precision, X.T @ t)
 
+            # 式(3.91):
             gamma = np.sum(eigenvalues / (self.alpha + eigenvalues))
+            # 式(3.92):
             self.alpha = float(gamma / np.sum(w_mean ** 2).clip(min=1e-10))
+            # 式(3.95):
             self.beta = float(
                 (N - gamma) / np.sum(np.square(t - X @ w_mean))
             )
+
+            ## 判断收敛:
             if np.allclose(params, [self.alpha, self.beta]):
                 break
         self.w_mean = w_mean
@@ -61,6 +69,8 @@ class EmpiricalBayesRegression(BayesianRegression):
         return -0.5 * self.beta * np.square(t - X @ w).sum()
 
     def _log_posterior(self, X, t, w):
+        # 式(3.82)
+        # 注意注意
         return self._log_likelihood(X, t, w) + self._log_prior(w)
 
     def log_evidence(self, X:np.ndarray, t:np.ndarray):
@@ -78,6 +88,8 @@ class EmpiricalBayesRegression(BayesianRegression):
         float
             log evidence
         """
+
+        # 式(3.86)计算证据函数的对数.
         N = len(t)
         D = np.size(X, 1)
         return 0.5 * (

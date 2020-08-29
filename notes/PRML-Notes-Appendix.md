@@ -72,3 +72,23 @@
 
 
 贝叶斯线性回归有什么缺点, 好像现在用的很少?
+
+
+
+3.5.2 - 式(3.89) 求导推导.
+
+
+
+3.5.2 - 式(3.91) 推导.
+
++ 解:
+
+  由(3.90):
+  $$
+  \begin{aligned}
+  \gamma &=M-\alpha \sum_{i} \frac{1}{\lambda_{i}+\alpha} \\
+  & = \sum_i (1 - \frac{\alpha}{\lambda_{i}+\alpha})
+  \end{aligned}
+  $$
+
+3.5.2 - 如何理解最大化证据函数中迭代计算 $\alpha$, 直到收敛的过程?
