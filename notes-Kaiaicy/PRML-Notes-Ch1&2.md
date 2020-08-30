@@ -2,6 +2,7 @@
 
 [TOC]
 
+PRML, the Elements of statistical learning, Understanding Machine Learning, Foundations of Machine Learning.
 
 ### 1 绪论
 
