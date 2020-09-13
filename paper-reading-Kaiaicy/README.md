@@ -14,3 +14,11 @@ Matching Networks for One Shot Learning [[code](https://github.com/oscarknagg/fe
 
 Prototypical Networks for Few-shot Learning [[code](https://github.com/jakesnell/prototypical-networks)]
 
+Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks [[code](https://github.com/cbfinn/maml) [code(PyTorch)](https://github.com/dragen1860/MAML-Pytorch)]
+
+Learning to Compare: Relation Network for Few-Shot Learning [[code](https://github.com/floodsung/LearningToCompare_FSL)]
+
+Reptile: A Scalable Meta- Learning Algorithm [[code](https://github.com/openai/supervised-reptile)]
+
+Meta-Learning with Implicit Gradients [[code](https://github.com/spiglerg/pyMeta)]
+

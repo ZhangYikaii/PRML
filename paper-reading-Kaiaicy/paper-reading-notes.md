@@ -211,6 +211,41 @@
 
   c) provide a competitive approach that **does not rely** upon **domain-specific** knowledge by instead exploiting deep learning techniques.
 
+### Learning to Compare: Relation Network for Few-Shot Learning
+
+Our approach is most related to others that aim to train an effective metric for one-shot learning.
+
+performs few-shot recognition by learning to compare query images against few-shot labeled sample images.
+
++ an embedding module generates representations of the query and training images.
++ then these embeddings are compared by a relation module that determines if they are from matching categories or not.
+
+#### Problem Definition
+
+The support set and testing set share the same label space, but the training set has its own label space.
+
+##### episode based training
+
+In each training iteration, an episode is formed by randomly selecting $C$ classes from the training set with $K$ labelled samples from each of the $C$ classes to act as the sample set $\mathcal{S}=\left\{\left(x_{i}, y_{i}\right)\right\}_{i=1}^{m}(m=K \times C)$, as well as a fraction of the remainder of those $C$ classes’ samples to serve as the query set $\mathcal{Q} = \left\{\left(x_{j}, y_{j}\right)\right\}_{j=1}^{n}$.
+
+![image-20200907193037720](assets/image-20200907193037720.png)
+
+an embedding module $f_{\varphi}$ and a relation module $g_{\phi}$.
+
+embedding module:
+$$
+x_j \in \mathcal{Q}, \ x_i \in \mathcal{S} \\ \text{Concatenation: } \mathcal{C}\left(f_{\varphi}\left(x_{i}\right), f_{\varphi}\left(x_{j}\right)\right)
+$$
+relation module:
+$$
+r_{i, j}=g_{\phi}\left(\mathcal{C}\left(f_{\varphi}\left(x_{i}\right), f_{\varphi}\left(x_{j}\right)\right)\right), \quad i=1,2, \ldots, C
+$$
+Objective Function:
+
+regressing **the relation score** $r_{i,j}$ to the ground truth: matched pairs have similarity 1 and the mismatched pair have similarity 0.
+
+![image-20200907195902903](assets/image-20200907195902903.png)
+
 
 
 ### 基于模型分解的小样本学习
@@ -220,3 +255,82 @@
 + 如何从 idea 形式化地对问题建模、简化并解决?
 
   通过模型的目标函数的性质, 对模型最优解的结构进行分解, 并将这种分解方式作为一种可行的先验.
+
+
+
+
+
++ 粗读或精读? 代码看了或复现了?
++ 重点方法/核心在第几页/哪个章节?
++ 题目?
++ 期刊?
++ 作者?
++ 时间?
++ 关键词?
++ 分类/方向?
++ 提出了什么问题?
++ 这个问题有什么意义?
++ 为了解决此问题提出了什么具体的idea?
++ 如何从该idea形式化地对问题建模、简化并解决的?
++ 理论方面证明的定理与推导过程?
++ 自己对论文的讨论/感想?
+
+
+
+
+
+### Few-Shot Learning via Embedding Adaptation with Set-to-Set Functions
+
++ 粗读或精读? 代码看了或复现了?
+
+  精读, 代码看了.
+
++ 重点方法/核心在第几页/哪个章节?
+
+  第3页 第四节 Adapting Embedding for Task-specific FSL.
+
++ 题目?
+
+  Few-Shot Learning via Embedding Adaptation with Set-to-Set Functions
+
++ 期刊?
+
+  CVPR
+
++ 作者?
+
+  Han-Jia Ye, Hexiang Hu, De-Chuan Zhan, Fei Sha
+
++ 时间?
+
+  2020
+
++ 关键词?
+
+  **set-to-set function** (yields task-specific embedding), few-shot visual recognition.
+
++ 分类/方向?
+
++ 提出了什么问题?
+
+  原先的 embedding $\phi_x$ 不能强调对特定任务最有区别的表达. 
+
++ 这个问题有什么意义?
+
++ 为了解决此问题提出了什么具体的idea?
+
+  将该问题转化为一个 model-based embedding adaptation 任务, 使用set-to-set function.
+
+  seen class: $\mathcal{D}^{\mathcal{S}}$, 上学到一个分类器/embedding function $f(\cdot)$, 这个是 task-agnostic 的:
+  $$
+  f^{*}=\underset{f}{\arg \min } \sum_{\left(\mathbf{x}_{\text {test}},\mathbf{y}_{\text {test}}^{S}\right) \in \mathcal{D}_{\text {test }}^{S}} \ell\left(f\left(\mathbf{x}_{\text {test }}^{S} ; \mathcal{D}_{\text {train }}^{S}\right), \mathbf{y}_{\text {test }}^{S}\right)
+  $$
+  
++ 如何从该idea形式化地对问题建模、简化并解决的?
+
+  使用function approximator来实现set-to-set transformation, 这包含 Bi-LSTM, deep sets, GCN, Transformer.
+
++ 理论方面证明的定理与推导过程?
+
++ 自己对论文的讨论/感想?
+

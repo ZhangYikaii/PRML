@@ -29,16 +29,23 @@ class BayesianLogisticRegression(LogisticRegression):
         max_iter : int, optional
             maximum number of paramter update iteration (the default is 100)
         """
+        ### 请注意: 这里好像是在用迭代重加权计算w.
         w = np.zeros(np.size(X, 1))
         eye = np.eye(np.size(X, 1))
         self.w_mean = np.copy(w)
+
+        # 先验中的精度 S_0^{-1}:
         self.w_precision = self.alpha * eye
         for _ in range(max_iter):
             w_prev = np.copy(w)
+            # 式(4.143)中 y_n = \sigma(w^T \phi_n)
             y = self._sigmoid(X @ w)
+            #
             grad = X.T @ (y - t) + self.w_precision @ (w - self.w_mean)
+            # 式(4.143):
             hessian = (X.T * y * (1 - y)) @ X + self.w_precision
             try:
+                # 似乎是迭代重加权最小平方
                 w -= np.linalg.solve(hessian, grad)
             except np.linalg.LinAlgError:
                 break

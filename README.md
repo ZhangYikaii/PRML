@@ -37,6 +37,14 @@
     [fishers_linear_discriminant.py](prml/linear/fishers_linear_discriminant.py)
 
     [gaussian.py](prml/rv/gaussian.py)
+    
+  + 4.3.2 Logistic Regression:
+  
+    [logistic_regression.py](prml/linear/logistic_regression.py)
+  
+  + 4.5 Bayesian Logistic Regression:
+  
+    [bayesian_logistic_regression.py](prml/linear/bayesian_logistic_regression.py)
 
 &nbsp;
 

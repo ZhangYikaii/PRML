@@ -106,15 +106,72 @@ $\theta$ 是网络权重, $f_\theta (\boldsymbol{y} \mid \boldsymbol{x})$ 是神
 
   ![image-20200830115535555](assets/image-20200830115535555.png)
 
++ overfitting:
+
+  ![image-20200830192552601](assets/image-20200830192552601.png)
+
+case study, **论文阅读: Recommending What Video to Watch Next: A Multitask Ranking System**. ![image-20200830192740338](assets/image-20200830192740338.png)
+
+有很多冲突的目标因素/推荐理由, 推荐模型产生 implicit bias.
+
+![image-20200830193702038](assets/image-20200830193702038.png)
+
+![image-20200830194656834](assets/image-20200830194656834.png)
+
+
+
+**Meta-Learning Basic:**
+
+从概率/贝叶斯的视角看Meta-Learning在做什么:
+
+![image-20200830195801073](assets/image-20200830195801073.png)
+
+关键问题: 在Meta-Learning中我们可以用某种方式incorporate additional data吗?
+
++ 先对 meta training data 训练, 是一个数据集的集合:
+  $$
+  \begin{array}{l}
+  \mathcal{D}_{\text {meta-train }}=\left\{\mathcal{D}_{1}, \ldots, \mathcal{D}_{n}\right\} \\
+  \mathcal{D}_{i}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{k}^{i}, y_{k}^{i}\right)\right\}
+  \end{array}
+  $$
+  
+
++ 在遇到新的任务新的数据时候, 可以更高效地学习.
+
+![image-20200830200531991](assets/image-20200830200531991.png)
+
+meta training data: 在 $\mathcal{D}_{\text{meta-train}}$ 上训练得到的参数. ![image-20200830200842135](assets/image-20200830200842135.png)
+
+![image-20200830201913759](assets/image-20200830201913759.png)
+
+$p( \phi \mid \mathcal{D}, \mathcal{D}_{\text{meta-train}})$ 近似分解为两个部分, 上式: 第一部分是要学习的新任务/新参数的, 第二部分是元学习的meta parameter.
+
+
+
+### HW 1
+
+CS 330 Autumn 2019/2020 Homework 1
+Data Processing and Memory Augmented Neural Networks
+
+you will:
+
++ 学会处理/划分meta-learning任务的数据, 训练过程是基于 $p (\mathcal{T})$.
++ 学会 memory augmented neural networks.
++ 分析 different size problems.
++ explore how they improve performance.
+
+dataset:
+
++ Omniglot.
++ one-shot learning which contains 1623 different characters from 50 different languages.
++ K-shot, N-way classification: 区分N类之前没有见过的字符, 每个类别有K个标记的例子.
 
 
 
 
 
-
-
-
-### Tensorflow (1.x) Review Session
+### [Lecture 3 - Optimization-Based Meta-Learning](https://www.bilibili.com/video/BV1KE411w7zZ?p=3)
 
 
 

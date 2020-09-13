@@ -99,7 +99,7 @@ $$
 
 #### 3.1.3 Sequential learning
 
-顺序算法中, 模型在每观测到一个数据点后即更新.
+顺序算法中, 模型在每观测到**一个**数据点后即更新.
 
 ##### 1 stochastic gradient descent(sequential gradient descent)
 
